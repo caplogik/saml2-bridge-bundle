@@ -22,15 +22,15 @@ namespace AdactiveSas\Saml2BridgeBundle\SAML2\Metadata;
 
 
 use AdactiveSas\Saml2BridgeBundle\Entity\HostedEntities;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\RouterInterface;
+use Twig\Environment;
 
 class MetadataFactory
 {
     /**
-     * @var \Symfony\Component\Templating\EngineInterface
+     * @var \Symfony\Component\Templating\Environment
      */
-    private $templateEngine;
+    private $twig;
 
     /**
      * @var HostedEntities
@@ -39,14 +39,14 @@ class MetadataFactory
 
     /**
      * MetadataFactory constructor.
-     * @param EngineInterface $templateEngine
+     * @param Environment $twig
      * @param HostedEntities $hostedEntities
      */
     public function __construct(
-        EngineInterface $templateEngine,
+        Environment $twig,
         HostedEntities $hostedEntities
     ) {
-        $this->templateEngine = $templateEngine;
+        $this->twig = $twig;
         $this->hostedEntities = $hostedEntities;
     }
 
@@ -55,15 +55,17 @@ class MetadataFactory
      */
     public function getMetadataResponse()
     {
-        $response = $this->templateEngine->renderResponse(
+        $response = new Response();
+
+        $response->setContent($this->twig->render(
             "AdactiveSasSaml2BridgeBundle:Metadata:metadata.xml.twig",
             [
                 "metadata" => $this->buildMetadata()
             ]
-        );
-        
-        $response->headers->set('Content-Type', 'xml');        
-        
+        ));
+
+        $response->headers->set('Content-Type', 'xml');
+
         return $response;
     }
 

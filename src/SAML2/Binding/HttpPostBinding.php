@@ -23,10 +23,10 @@ use AdactiveSas\Saml2BridgeBundle\Exception\BadRequestHttpException;
 use AdactiveSas\Saml2BridgeBundle\Exception\LogicException;
 use AdactiveSas\Saml2BridgeBundle\Form\SAML2ResponseForm;
 use AdactiveSas\Saml2BridgeBundle\SAML2\Binding\Exception\UnsupportedBindingException;
-use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Twig\Environment;
 
 class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterface
 {
@@ -36,19 +36,19 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     protected $formFactory;
 
     /**
-     * @var EngineInterface
+     * @var Environment
      */
-    protected $templateEngine;
+    protected $twig;
 
     /**
      * HttpPostBinding constructor.
      * @param FormFactoryInterface $formFactory
-     * @param EngineInterface $templateEngine
+     * @param Environment $twig
      */
-    public function __construct(FormFactoryInterface $formFactory, EngineInterface $templateEngine)
+    public function __construct(FormFactoryInterface $formFactory, Environment $twig)
     {
         $this->formFactory = $formFactory;
-        $this->templateEngine = $templateEngine;
+        $this->twig = $twig;
     }
 
     /**
@@ -61,12 +61,16 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     {
         $form = $this->getSignedResponseForm($response);
 
-        return $this->templateEngine->renderResponse(
+        $response = new Response();
+
+        $response->setContent($this->twig->render(
             "AdactiveSasSaml2BridgeBundle:Binding:post.html.twig",
             [
                 "form" => $form->createView()
             ]
-        );
+        ));
+
+        return $response;
     }
 
     /**
@@ -79,12 +83,14 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     {
         $form = $this->getUnsignedResponseForm($response);
 
-        return $this->templateEngine->renderResponse(
+        $response = new Response();
+
+        $response->setContent($this->twig->render(
             "AdactiveSasSaml2BridgeBundle:Binding:post.html.twig",
             [
                 "form" => $form->createView(),
             ]
-        );
+        ));
     }
 
     /**
