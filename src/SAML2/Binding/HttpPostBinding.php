@@ -64,7 +64,7 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
         $response = new Response();
 
         $response->setContent($this->twig->render(
-            "AdactiveSasSaml2BridgeBundle:Binding:post.html.twig",
+            "@AdactiveSasSaml2Bridge/Binding/post.html.twig",
             [
                 "form" => $form->createView()
             ]
@@ -86,7 +86,7 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
         $response = new Response();
 
         $response->setContent($this->twig->render(
-            "AdactiveSasSaml2BridgeBundle:Binding:post.html.twig",
+            "@AdactiveSasSaml2Bridge/Binding/post.html.twig",
             [
                 "form" => $form->createView(),
             ]
