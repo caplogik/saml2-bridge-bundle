@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInt
 use Symfony\Component\Security\Core\Authorization\AuthorizationChecker;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Workflow\DefinitionBuilder;
-use Symfony\Component\Workflow\MarkingStore\SingleStateMarkingStore;
+use Symfony\Component\Workflow\MarkingStore\MethodMarkingStore;
 use Symfony\Component\Workflow\Transition;
 use Symfony\Component\Workflow\Workflow;
 
@@ -27,7 +27,7 @@ class SamlStateHandler implements EventSubscriberInterface
     const TRANSITION_SSO_AUTHENTICATE_FAIL = "sso_authenticate_fail";
     const TRANSITION_SSO_RESPOND = "sso_respond";
     const TRANSITION_SSO_RESUME = "sso_resume";
-    
+
     const TRANSITION_SLS_START = "sls_transition_start";
     const TRANSITION_SLS_START_BY_IDP = "sls_transition_start_by_idp";
     const TRANSITION_SLS_START_DISPATCH = "sls_start_dispatch";
@@ -100,7 +100,7 @@ class SamlStateHandler implements EventSubscriberInterface
     {
         // Reload from session
         $state = $this->session->get(self::SESSION_NAME_ATTRIBUTE);
-        
+
         $this->state = $state ? $state : new SamlState();
     }
 
@@ -295,7 +295,7 @@ class SamlStateHandler implements EventSubscriberInterface
 
         $definition = $builder->build();
 
-        $marking = new SingleStateMarkingStore('state');
+        $marking = new MethodMarkingStore(true, 'state');
 
         return new Workflow($definition, $marking, null, "adactive_sas.saml");
     }
