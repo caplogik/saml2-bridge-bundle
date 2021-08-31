@@ -25,6 +25,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Logout\LogoutHandlerInterface;
 
 class SamlLogoutHandler implements LogoutHandlerInterface
@@ -54,7 +55,13 @@ class SamlLogoutHandler implements LogoutHandlerInterface
      */
     public function logout(Request $request, Response $response, TokenInterface $token)
     {
-        $event = new LogoutEvent($token->getUser(), $response);
+        $user = $token->getUser();
+
+        if (!$user instanceof UserInterface) {
+            return;
+        }
+
+        $event = new LogoutEvent($user, $response);
         $this->dispatcher->dispatch(Saml2Events::SLO_LOGOUT_SUCCESS, $event);
     }
 }
