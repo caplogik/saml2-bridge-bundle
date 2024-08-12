@@ -27,7 +27,7 @@ abstract class AbstractResponseBuilder
     private $issueInstant;
 
     /**
-     * @var \XMLSecurityKey|null
+     * @var \RobRichards\XMLSecLibs\XMLSecurityKey|null
      */
     private $signatureKey;
 
@@ -37,7 +37,7 @@ abstract class AbstractResponseBuilder
     abstract protected function createResponseInstance();
 
     /**
-     * @return \SAML2_StatusResponse
+     * @return \SAML2\StatusResponse
      */
     abstract public function getResponse();
 
@@ -111,17 +111,17 @@ abstract class AbstractResponseBuilder
     }
 
     /**
-     * @param \XMLSecurityKey|null $key
+     * @param \RobRichards\XMLSecLibs\XMLSecurityKey|null $key
      * @return $this
      */
-    public function setSignatureKey(\XMLSecurityKey $key = null){
+    public function setSignatureKey(\RobRichards\XMLSecLibs\XMLSecurityKey $key = null){
         $this->signatureKey = $key;
 
         return $this;
     }
 
     /**
-     * @return \XMLSecurityKey|null
+     * @return \RobRichards\XMLSecLibs\XMLSecurityKey|null
      */
     public function getSignatureKey(){
         return $this->signatureKey;

@@ -24,74 +24,74 @@ use Symfony\Component\HttpFoundation\Response;
 interface HttpBindingInterface
 {
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return Response
      */
-    public function getSignedResponse(\SAML2_StatusResponse $response);
+    public function getSignedResponse(\SAML2\StatusResponse $response);
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return Response
      */
-    public function getUnsignedResponse(\SAML2_StatusResponse $response);
+    public function getUnsignedResponse(\SAML2\StatusResponse $response);
 
     /**
-     * @param \SAML2_Request $request
+     * @param \SAML2\Request $request
      * @return Response
      */
-    public function getSignedRequest(\SAML2_Request $request);
+    public function getSignedRequest(\SAML2\Request $request);
 
     /**
-     * @param \SAML2_Request $request
+     * @param \SAML2\Request $request
      * @return Response
      */
-    public function getUnsignedRequest(\SAML2_Request $request);
+    public function getUnsignedRequest(\SAML2\Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_AuthnRequest
+     * @return \SAML2\AuthnRequest
      */
     public function receiveSignedAuthnRequest(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_LogoutRequest
+     * @return \SAML2\LogoutRequest
      */
     public function receiveSignedLogoutRequest(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_LogoutResponse
+     * @return \SAML2\LogoutResponse
      */
     public function receiveSignedLogoutResponse(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_AuthnRequest
+     * @return \SAML2\AuthnRequest
      */
     public function receiveUnsignedAuthnRequest(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_LogoutRequest
+     * @return \SAML2\LogoutRequest
      */
     public function receiveUnsignedLogoutRequest(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_LogoutResponse
+     * @return \SAML2\LogoutResponse
      */
     public function receiveUnsignedLogoutResponse(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_Message
+     * @return \SAML2\Message
      */
     public function receiveSignedMessage(Request $request);
 
     /**
      * @param Request $request
-     * @return \SAML2_Message
+     * @return \SAML2\Message
      */
     public function receiveUnsignedMessage(Request $request);
 }

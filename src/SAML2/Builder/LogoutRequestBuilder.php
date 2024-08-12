@@ -22,12 +22,12 @@ namespace AdactiveSas\Saml2BridgeBundle\SAML2\Builder;
 class LogoutRequestBuilder extends AbstractRequestBuilder
 {
     /**
-     * @var \SAML2_LogoutRequest
+     * @var \SAML2\LogoutRequest
      */
     protected $request;
 
     /**
-     * @return \SAML2_LogoutRequest
+     * @return \SAML2\LogoutRequest
      */
     public function getRequest()
     {
@@ -39,7 +39,7 @@ class LogoutRequestBuilder extends AbstractRequestBuilder
      */
     protected function createRequestInstance()
     {
-        $this->request = new \SAML2_LogoutRequest();
+        $this->request = new \SAML2\LogoutRequest();
     }
 
     /**

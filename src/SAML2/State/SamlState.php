@@ -22,7 +22,7 @@ class SamlState
     const STATE_SLS_RESPONDING = "sls_responding";
 
     /**
-     * @var \SAML2_Request
+     * @var \SAML2\Request
      */
     protected $request;
 
@@ -54,7 +54,7 @@ class SamlState
     /**
      * @var null|string
      */
-    protected $authnContext = \SAML2_Const::AC_UNSPECIFIED;
+    protected $authnContext = \SAML2\Constants::AC_UNSPECIFIED;
 
     /**
      * SamlState constructor.
@@ -86,7 +86,7 @@ class SamlState
     }
 
     /**
-     * @return \SAML2_Request
+     * @return \SAML2\Request
      */
     public function getRequest()
     {
@@ -94,10 +94,10 @@ class SamlState
     }
 
     /**
-     * @param \SAML2_Request $request
+     * @param \SAML2\Request $request
      * @return $this
      */
-    public function setRequest(\SAML2_Request $request = null)
+    public function setRequest(\SAML2\Request $request = null)
     {
         $this->request = $request;
 

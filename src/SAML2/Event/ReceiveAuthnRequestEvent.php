@@ -35,19 +35,19 @@ class ReceiveAuthnRequestEvent extends Event
     protected $samlStateHandler;
 
     /**
-     * @var \SAML2_AuthnRequest
+     * @var \SAML2\AuthnRequest
      */
     protected $authRequest;
 
     /**
      * AuthenticationEvent constructor.
      *
-     * @param \SAML2_AuthnRequest $authRequest
+     * @param \SAML2\AuthnRequest $authRequest
      * @param HostedIdentityProvider $hostedIdentityProvider
      * @param SamlStateHandler $samlStateHandler
      */
     public function __construct(
-        \SAML2_AuthnRequest $authRequest,
+        \SAML2\AuthnRequest $authRequest,
         HostedIdentityProvider $hostedIdentityProvider,
         SamlStateHandler $samlStateHandler
     ) {
@@ -73,7 +73,7 @@ class ReceiveAuthnRequestEvent extends Event
     }
 
     /**
-     * @return \SAML2_AuthnRequest
+     * @return \SAML2\AuthnRequest
      */
     public function getAuthRequest()
     {

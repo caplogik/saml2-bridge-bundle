@@ -28,11 +28,11 @@ class AuthnRequestBuilder extends AbstractRequestBuilder
      */
     protected function createRequestInstance()
     {
-        $this->request = new \SAML2_AuthnRequest();
+        $this->request = new \SAML2\AuthnRequest();
     }
 
     /**
-     * @return \SAML2_Request
+     * @return \SAML2\Request
      */
     public function getRequest()
     {

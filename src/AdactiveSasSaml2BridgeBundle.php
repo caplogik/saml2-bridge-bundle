@@ -30,6 +30,6 @@ class AdactiveSasSaml2BridgeBundle extends Bundle
         parent::boot();
         /** @var BridgeContainer $bridgeContainer */
         $bridgeContainer = $this->container->get('adactive_sas_saml2_bridge.container');
-        \SAML2_Compat_ContainerSingleton::setContainer($bridgeContainer);
+        \SAML2\Compat\ContainerSingleton::setContainer($bridgeContainer);
     }
 }

@@ -20,7 +20,9 @@
 
 namespace AdactiveSas\Saml2BridgeBundle\Entity;
 
-class ServiceProvider extends \SAML2_Configuration_ServiceProvider
+use \SAML2\Configuration\ServiceProvider as BaseServiceProvider;
+
+class ServiceProvider extends BaseServiceProvider
 {
     /**
      * @return \DateInterval
@@ -127,7 +129,7 @@ class ServiceProvider extends \SAML2_Configuration_ServiceProvider
      */
     public function getNameIdFormat()
     {
-        return $this->get('nameIdFormat', \SAML2_Const::NAMEFORMAT_BASIC);
+        return $this->get('nameIdFormat', \SAML2\Constants::NAMEFORMAT_BASIC);
     }
 
     /**

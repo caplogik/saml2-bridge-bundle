@@ -36,9 +36,9 @@ fVNNj9owFLzvr4h8J3GyQBoLgij0A4lCRLI99FK59kuxFNup7bD039fJwopKu5ws+c2bN+N5ni3OsglO
 DOCUMENT;
 
         $relayState = 'relayStateData';
-        $key = $this->createMock(\XMLSecurityKey::class);
+        $key = $this->createMock(\RobRichards\XMLSecLibs\XMLSecurityKey::class);
 
-        $request = $this->createMock(\SAML2_Request::class);
+        $request = $this->createMock(\SAML2\Request::class);
         $request->method('getDestination')->willReturn($destination);
         $request->method('getRelayState')->willReturn($relayState);
         $request->method('getSignatureKey')->willReturn($key);
@@ -59,7 +59,7 @@ DOCUMENT;
     public function testGetSignedRequestWithInvalidDestination(){
         $stub = $this->getMockForAbstractClass(AbstractHttpBinding::class);
 
-        $request = $this->createMock(\SAML2_Request::class);
+        $request = $this->createMock(\SAML2\Request::class);
         $request->method('getDestination')->willReturn(null);
 
         $stub->getSignedRequest($request);
@@ -72,7 +72,7 @@ DOCUMENT;
     public function testGetSignedRequestWithInvalidSignatureKey(){
         $stub = $this->getMockForAbstractClass(AbstractHttpBinding::class);
 
-        $request = $this->createMock(\SAML2_Request::class);
+        $request = $this->createMock(\SAML2\Request::class);
         $request->method('getDestination')->willReturn('something');
         $request->method('getSignatureKey')->willReturn(null);
 

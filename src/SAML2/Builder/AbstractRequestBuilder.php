@@ -29,7 +29,7 @@ abstract class AbstractRequestBuilder
     abstract protected function createRequestInstance();
 
     /**
-     * @return \SAML2_Request
+     * @return \SAML2\Request
      */
     abstract public function getRequest();
 
@@ -74,10 +74,10 @@ abstract class AbstractRequestBuilder
     }
 
     /**
-     * @param \XMLSecurityKey $key
+     * @param \RobRichards\XMLSecLibs\XMLSecurityKey $key
      * @return $this
      */
-    public function setSignatureKey(\XMLSecurityKey $key){
+    public function setSignatureKey(\RobRichards\XMLSecLibs\XMLSecurityKey $key){
         $this->getRequest()->setSignatureKey($key);
 
         return $this;

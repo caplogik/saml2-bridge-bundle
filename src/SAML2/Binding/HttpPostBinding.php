@@ -52,12 +52,12 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     }
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return Response
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      * @throws \RuntimeException
      */
-    public function getSignedResponse(\SAML2_StatusResponse $response)
+    public function getSignedResponse(\SAML2\StatusResponse $response)
     {
         $form = $this->getSignedResponseForm($response);
 
@@ -74,12 +74,12 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     }
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return Response
      * @throws \RuntimeException
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    public function getUnsignedResponse(\SAML2_StatusResponse $response)
+    public function getUnsignedResponse(\SAML2\StatusResponse $response)
     {
         $form = $this->getUnsignedResponseForm($response);
 
@@ -94,11 +94,11 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     }
 
     /**
-     * @param \SAML2_Request $request
+     * @param \SAML2\Request $request
      * @return Response
      * @throws \AdactiveSas\Saml2BridgeBundle\SAML2\Binding\Exception\UnsupportedBindingException
      */
-    public function getUnsignedRequest(\SAML2_Request $request)
+    public function getUnsignedRequest(\SAML2\Request $request)
     {
         throw new UnsupportedBindingException("Unsupported binding: unsigned POST Request is not supported at the moment");
     }
@@ -124,32 +124,32 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
     }
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return \Symfony\Component\Form\FormInterface
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    protected function getSignedResponseForm(\SAML2_StatusResponse $response)
+    protected function getSignedResponseForm(\SAML2\StatusResponse $response)
     {
         return $this->getResponseForm($response, true);
     }
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @return \Symfony\Component\Form\FormInterface
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    protected function getUnsignedResponseForm(\SAML2_StatusResponse $response)
+    protected function getUnsignedResponseForm(\SAML2\StatusResponse $response)
     {
         return $this->getResponseForm($response, false);
     }
 
     /**
-     * @param \SAML2_StatusResponse $response
+     * @param \SAML2\StatusResponse $response
      * @param $isSign
      * @return \Symfony\Component\Form\FormInterface
      * @throws \Symfony\Component\OptionsResolver\Exception\InvalidOptionsException
      */
-    protected function getResponseForm(\SAML2_StatusResponse $response, $isSign)
+    protected function getResponseForm(\SAML2\StatusResponse $response, $isSign)
     {
         if ($response->getDestination() === null) {
             throw new LogicException('Invalid destination');
@@ -181,10 +181,10 @@ class HttpPostBinding extends AbstractHttpBinding implements HttpBindingInterfac
      * @param string $destination
      * @param string $encodedRequest
      * @param string $relayState
-     * @param \XMLSecurityKey $signatureKey
+     * @param \RobRichards\XMLSecLibs\XMLSecurityKey $signatureKey
      * @return Response
      */
-    protected function buildRequest($destination, $encodedRequest, $relayState, \XMLSecurityKey $signatureKey)
+    protected function buildRequest($destination, $encodedRequest, $relayState, \RobRichards\XMLSecLibs\XMLSecurityKey $signatureKey)
     {
         throw new UnsupportedBindingException("Unsupported binding: build POST Request is not supported at the moment");
     }

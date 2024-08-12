@@ -9,7 +9,7 @@
 namespace AdactiveSas\Saml2BridgeBundle\SAML2;
 
 
-class SAML2_Const extends \SAML2_Const
+class SAML2_Const extends \SAML2\Constants
 {
 
     /**

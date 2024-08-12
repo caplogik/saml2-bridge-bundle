@@ -3,7 +3,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/AdactiveSAS/saml2-bridge-bundle/badge.svg?branch=master)](https://coveralls.io/github/AdactiveSAS/saml2-bridge-bundle?branch=master)
 [![Build Status](https://travis-ci.org/AdactiveSAS/saml2-bridge-bundle.svg?branch=master)](https://travis-ci.org/AdactiveSAS/saml2-bridge-bundle)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/9e59c817-b08a-4065-bbe5-742335adcf2b/big.png)](https://insight.sensiolabs.com/projects/9e59c817-b08a-4065-bbe5-742335adcf2b)
-A bundle that adds SAML capabilities to your application using [simplesamlphp/saml2][1] highly inspired by 
+A bundle that adds SAML capabilities to your application using [simplesamlphp/saml2][1] highly inspired by
 [OpenConext/Stepup-saml-bundle][2]
 
 ## SAML Support
@@ -11,7 +11,7 @@ A bundle that adds SAML capabilities to your application using [simplesamlphp/sa
 SAML Support is limited, this bundle can be used to provide a basic identity provider with the following support:
 - Basic metadata
 - Single Sign On:
-    - Binding: 
+    - Binding:
         - Http-POST & Http-Redirect signed request
         - Http-POST &  Http-Post signed response
 - Single Logout:
@@ -37,7 +37,7 @@ SAML Support is limited, this bundle can be used to provide a basic identity pro
       $bundles[] = new AdactiveSas\Saml2BridgeBundle\AdactiveSasSaml2BridgeBundle();
   }
   ```
-  
+
 ### Configuration
 
 ```yaml
@@ -62,7 +62,7 @@ Also add logout handler.
 ```
 The hosted configuration lists the configuration for the services (SP, IdP or both) that your application offers. SP and IdP
  functionality can be turned off and on individually through the repective `enabled` flags.
- 
+
 The inlined certificate in the last line can be replaced with `certificate_file` containing a filesystem path to
 a file which contains said certificate.
 
@@ -89,7 +89,7 @@ use AdactiveSas\Saml2BridgeBundle\Entity\ServiceProviderRepository;
 class SamlServiceProviderRepository implements ServiceProviderRepository
 {
     protected $spMap = [];
-    
+
     public function __construct() {
         $this->spMap["https://test.fake/metadata"] = new ServiceProvider(
             [
@@ -100,29 +100,29 @@ class SamlServiceProviderRepository implements ServiceProviderRepository
                 * @return null|string
                 */
                 'certificateData' => 'MIIEJTCCAw2gAwIBAgIJANug+o++1X5IMA0GCSqGSIb3DQEBCwUAMIGoMQswCQYDVQQGEwJOTDEQMA4GA1UECAwHVXRyZWNodDEQMA4GA1UEBwwHVXRyZWNodDEVMBMGA1UECgwMU1VSRm5ldCBCLlYuMRMwEQYDVQQLDApTVVJGY29uZXh0MRwwGgYDVQQDDBNTVVJGbmV0IERldmVsb3BtZW50MSswKQYJKoZIhvcNAQkBFhxzdXJmY29uZXh0LWJlaGVlckBzdXJmbmV0Lm5sMB4XDTE0MTAyMDEyMzkxMVoXDTE0MTExOTEyMzkxMVowgagxCzAJBgNVBAYTAk5MMRAwDgYDVQQIDAdVdHJlY2h0MRAwDgYDVQQHDAdVdHJlY2h0MRUwEwYDVQQKDAxTVVJGbmV0IEIuVi4xEzARBgNVBAsMClNVUkZjb25leHQxHDAaBgNVBAMME1NVUkZuZXQgRGV2ZWxvcG1lbnQxKzApBgkqhkiG9w0BCQEWHHN1cmZjb25leHQtYmVoZWVyQHN1cmZuZXQubmwwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDXuSSBeNJY3d4p060oNRSuAER5nLWT6AIVbv3XrXhcgSwc9m2b8u3ksp14pi8FbaNHAYW3MjlKgnLlopYIylzKD/6Ut/clEx67aO9Hpqsc0HmIP0It6q2bf5yUZ71E4CN2HtQceO5DsEYpe5M7D5i64kS2A7e2NYWVdA5Z01DqUpQGRBc+uMzOwyif6StBiMiLrZH3n2r5q5aVaXU4Vy5EE4VShv3Mp91sgXJj/v155fv0wShgl681v8yf2u2ZMb7NKnQRA4zM2Ng2EUAyy6PQ+Jbn+rALSm1YgiJdVuSlTLhvgwbiHGO2XgBi7bTHhlqSrJFK3Gs4zwIsop/XqQRBAgMBAAGjUDBOMB0GA1UdDgQWBBQCJmcoa/F7aM3jIFN7Bd4uzWRgzjAfBgNVHSMEGDAWgBQCJmcoa/F7aM3jIFN7Bd4uzWRgzjAMBgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBCwUAA4IBAQBd80GpWKjp1J+Dgp0blVAox1s/WPWQlex9xrx1GEYbc5elp3svS+S82s7dFm2llHrrNOBt1HZVC+TdW4f+MR1xq8O5lOYjDRsosxZc/u9jVsYWYc3M9bQAx8VyJ8VGpcAK+fLqRNabYlqTnj/t9bzX8fS90sp8JsALV4g84Aj0G8RpYJokw+pJUmOpuxsZN5U84MmLPnVfmrnuCVh/HkiLNV2c8Pk8LSomg6q1M1dQUTsz/HVxcOhHLj/owwh3IzXf/KXV/E8vSYW8o4WWCAnruYOWdJMI4Z8NG1Mfv7zvb7U3FL1C/KLV04DqzALXGj+LVmxtDvuxqC042apoIDQV',
-                
+
                 /**
                 * Returns the full path to the (local) file that contains the X509 pem certificate.
                 *
                 * @return null|string
                 */
                 "certificateFile" => "",
-                                
+
                 /**
                 * @return null|string
                 */
                 "entityId" => "https://test.fake/saml/metadata",
-                
+
                 /**
                 * @return null|bool
                 */
                 "assertionEncryptionEnabled" => true,
-                                
+
                 "assertionConsumerUrl" => "https://test.fake/saml/acs",
-                "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_POST,
+                "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_POST,
                 "singleLogoutUrl" => "https://test.fake/saml/sls",
-                "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
-                "nameIdFormat" => \SAML2_Const::NAMEID_PERSISTENT,
+                "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
+                "nameIdFormat" => \SAML2\Constants::NAMEID_PERSISTENT,
                 "nameIdValue" => function (UserInterface $user) {
                     /** @var User $user */
                     return $user->getEmailCanonical();
@@ -214,10 +214,10 @@ $this->spMap["https://slack.com"] = new ServiceProvider(
         "assertionEncryptionEnabled" => true,
 
         "assertionConsumerUrl" => "https://$slackTeamName.slack.com/sso/saml",
-        "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_POST,
+        "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_POST,
         "singleLogoutUrl" => "https://$slackTeamName.slack.com/sso/saml/logout",
-        "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
-        "nameIdFormat" => \SAML2_Const::NAMEID_PERSISTENT,
+        "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
+        "nameIdFormat" => \SAML2\Constants::NAMEID_PERSISTENT,
         "nameIdValue" => function (UserInterface $user) {
             /** @var User $user */
             return $user->getEmailCanonical();
@@ -281,9 +281,9 @@ $this->spMap["https://$freshdeskAccountName.freshdesk.com"] = new ServiceProvide
         "assertionEncryptionEnabled" => false,
 
         "assertionConsumerUrl" => "https://$freshdeskAccountName.freshdesk.com/login/saml",
-        "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_POST,
+        "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_POST,
         "singleLogoutUrl" => "https://$freshdeskAccountName.freshdesk.com/logout/saml",
-        "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+        "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
         "nameIdFormat" => 'urn:oasis:names:tc:SAML:2.0:nameid-format:email',
         "nameIdValue" => function (UserInterface $user) {
             /** @var User $user */
@@ -348,9 +348,9 @@ $this->spMap["rpm.newrelic.com"] = new ServiceProvider(
         "assertionEncryptionEnabled" => false,
 
         "assertionConsumerUrl" => "https://rpm.newrelic.com/accounts/$accountId/sso/saml/finalize",
-        "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_POST,
+        "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_POST,
         "singleLogoutUrl" => "",
-        "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+        "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
         "nameIdFormat" => 'urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress',
         "nameIdValue" => function (UserInterface $user) {
             /** @var User $user */

@@ -28,7 +28,7 @@ class AuthnRequestBuilderTest extends TestCase
 {
     public static function setUpBeforeClass()
     {
-        \SAML2_Compat_ContainerSingleton::setContainer(new \SAML2_Compat_MockContainer());
+        \SAML2\Compat\ContainerSingleton::setContainer(new \SAML2\Compat\MockContainer());
     }
 
     public function testConstructorWithDefaultValue()

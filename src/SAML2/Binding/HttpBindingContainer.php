@@ -51,9 +51,9 @@ class HttpBindingContainer
      */
     public function get($binding){
         switch ($binding){
-            case \SAML2_Const::BINDING_HTTP_REDIRECT:
+            case \SAML2\Constants::BINDING_HTTP_REDIRECT:
                 return $this->redirectBinding;
-            case \SAML2_Const::BINDING_HTTP_POST:
+            case \SAML2\Constants::BINDING_HTTP_POST:
                 return $this->postBinding;
             default:
                 throw new UnsupportedBindingException("Unsupported binding: ". $binding);
@@ -77,9 +77,9 @@ class HttpBindingContainer
     {
         switch ($requestMethodName){
             case Request::METHOD_GET:
-                return \SAML2_Const::BINDING_HTTP_REDIRECT;
+                return \SAML2\Constants::BINDING_HTTP_REDIRECT;
             case Request::METHOD_POST:
-                return \SAML2_Const::BINDING_HTTP_POST;
+                return \SAML2\Constants::BINDING_HTTP_POST;
             default:
                 throw new UnsupportedBindingException(sprintf(
                     'Could not receive Message from HTTP Request: expected a GET or POST method, got %s',

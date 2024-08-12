@@ -31,9 +31,9 @@ class SamlServiceProviderRepository implements ServiceProviderRepository
                 "entityId" => static::SP_BASIC,
 
                 "assertionConsumerUrl" => "https://test.fake/saml/acs",
-                "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+                "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
                 "singleLogoutUrl" => "https://test.fake/saml/sls",
-                "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+                "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
                 "nameIdValue" => "moroine",
                 "attributes" => [
                     'email' => function (UserInterface $user) {
@@ -50,9 +50,9 @@ class SamlServiceProviderRepository implements ServiceProviderRepository
                 "entityId" => static::SP_NO_SIGNING,
 
                 "assertionConsumerUrl" => "https://test.other.fake/saml/acs",
-                "assertionConsumerBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+                "assertionConsumerBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
                 "singleLogoutUrl" => "https://test.other.fake/saml/sls",
-                "singleLogoutBinding" => \SAML2_Const::BINDING_HTTP_REDIRECT,
+                "singleLogoutBinding" => \SAML2\Constants::BINDING_HTTP_REDIRECT,
                 "wantSignedAuthnRequest" => false,
                 "wantSignedAuthnResponse" => false,
                 "wantSignedAssertions" => false,
