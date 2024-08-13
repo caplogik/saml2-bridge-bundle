@@ -23,7 +23,7 @@ use AdactiveSas\Saml2BridgeBundle\Entity\HostedIdentityProvider;
 use AdactiveSas\Saml2BridgeBundle\Entity\ServiceProvider;
 use AdactiveSas\Saml2BridgeBundle\SAML2\Builder\AuthnResponseBuilder;
 use AdactiveSas\Saml2BridgeBundle\SAML2\State\SamlStateHandler;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class GetAuthnResponseEvent extends Event
 {

@@ -21,7 +21,7 @@ namespace AdactiveSas\Saml2BridgeBundle\Security;
 
 use AdactiveSas\Saml2BridgeBundle\SAML2\Event\LogoutEvent;
 use AdactiveSas\Saml2BridgeBundle\SAML2\Event\Saml2Events;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

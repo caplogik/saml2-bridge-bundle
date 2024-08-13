@@ -19,7 +19,7 @@
 namespace AdactiveSas\Saml2BridgeBundle\SAML2\Event;
 
 
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\User\UserInterface;
 

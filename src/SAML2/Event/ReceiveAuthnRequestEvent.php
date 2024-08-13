@@ -20,7 +20,7 @@ namespace AdactiveSas\Saml2BridgeBundle\SAML2\Event;
 
 use AdactiveSas\Saml2BridgeBundle\Entity\HostedIdentityProvider;
 use AdactiveSas\Saml2BridgeBundle\SAML2\State\SamlStateHandler;
-use Symfony\Component\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class ReceiveAuthnRequestEvent extends Event
 {
