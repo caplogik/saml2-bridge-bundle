@@ -48,10 +48,11 @@ class LogoutRequestBuilder extends AbstractRequestBuilder
      * @return $this
      */
     public function setNameId($value, $format) {
-        $this->request->setNameId([
-            "Value" => $value,
-            "Format" => $format
-        ]);
+        $nameId = new \SAML2\XML\saml\NameID();
+        $nameId->setValue($value);
+        $nameId->setFormat($format);
+
+        $this->request->setNameId($nameId);
 
         return $this;
     }

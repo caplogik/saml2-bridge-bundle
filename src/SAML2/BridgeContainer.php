@@ -41,7 +41,7 @@ class BridgeContainer extends \SAML2\Compat\AbstractContainer
     /**
      * @return LoggerInterface
      */
-    public function getLogger()
+    public function getLogger(): LoggerInterface
     {
         return $this->logger;
     }
@@ -49,17 +49,17 @@ class BridgeContainer extends \SAML2\Compat\AbstractContainer
     /**
      * Generate a random identifier for identifying SAML2 documents.
      */
-    public function generateId()
+    public function generateId(): string
     {
         return '_' . bin2hex(openssl_random_pseudo_bytes(30));
     }
 
-    public function debugMessage($message, $type)
+    public function debugMessage($message, string $type): void
     {
         $this->logger->debug($message, ['type' => $type]);
     }
 
-    public function redirect($url, $data = array())
+    public function redirect(string $url, array $data = array()): void
     {
         throw new \BadMethodCallException(sprintf(
             "%s:%s may not be called in the Adactive\\Saml2BridgeBundle as it doesn't work with Symfony2",
@@ -68,11 +68,29 @@ class BridgeContainer extends \SAML2\Compat\AbstractContainer
         ));
     }
 
-    public function postRedirect($url, $data = array())
+    public function postRedirect(string $url, array $data = array()): void
     {
         throw new \BadMethodCallException(sprintf(
             "%s:%s may not be called in the Adactive\\Saml2BridgeBundle as it doesn't work with Symfony2",
             __CLASS__,
+            __METHOD__
+        ));
+    }
+
+    public function getTempDir(): string
+    {
+        throw new \BadMethodCallException(sprintf(
+            "%s:%s may not be called",
+            self::class,
+            __METHOD__
+        ));
+    }
+
+    public function writeFile(string $filename, string $data, int $mode = null): void
+    {
+        throw new \BadMethodCallException(sprintf(
+            "%s:%s may not be called",
+            self::class,
             __METHOD__
         ));
     }

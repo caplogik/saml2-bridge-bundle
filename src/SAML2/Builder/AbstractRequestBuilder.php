@@ -57,7 +57,10 @@ abstract class AbstractRequestBuilder
      * @param $issuer
      * @return $this
      */
-    public function setIssuer($issuer){
+    public function setIssuer($issuerValue){
+        $issuer = new \SAML2\XML\saml\Issuer();
+        $issuer->setValue($issuerValue);
+
         $this->getRequest()->setIssuer($issuer);
 
         return $this;

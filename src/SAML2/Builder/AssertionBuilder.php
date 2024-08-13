@@ -47,11 +47,10 @@ class AssertionBuilder
 
         // Add default bearer confirmation
         $confirmation = new \SAML2\XML\saml\SubjectConfirmation();
-        $confirmation->Method = \SAML2\Constants::CM_BEARER;
+        $confirmation->setMethod(\SAML2\Constants::CM_BEARER);
 
         $confirmationData = new \SAML2\XML\saml\SubjectConfirmationData();
-
-        $confirmation->SubjectConfirmationData = $confirmationData;
+        $confirmation->setSubjectConfirmationData($confirmationData);
 
         $this->assertion->setSubjectConfirmation([$confirmation]);
     }
@@ -88,7 +87,7 @@ class AssertionBuilder
         if ($interval !== null) {
             /** @var \SAML2\XML\saml\SubjectConfirmation $confirmation */
             $confirmation = $this->assertion->getSubjectConfirmation()[0];
-            $confirmation->SubjectConfirmationData->NotBefore = $beforeTime->getTimestamp();
+            $confirmation->getSubjectConfirmationData()->setNotBefore($beforeTime->getTimestamp());
             $this->assertion->setSubjectConfirmation([$confirmation]);
         }
 
@@ -107,7 +106,7 @@ class AssertionBuilder
         $this->assertion->setNotOnOrAfter($endTime->getTimestamp());
 
         $confirmation = $this->assertion->getSubjectConfirmation()[0];
-        $confirmation->SubjectConfirmationData->NotOnOrAfter = $endTime->getTimestamp();
+        $confirmation->getSubjectConfirmationData()->setNotOnOrAfter($endTime->getTimestamp());
         $this->assertion->setSubjectConfirmation([$confirmation]);
 
         return $this;
@@ -124,7 +123,7 @@ class AssertionBuilder
 
         $this->assertion->setSessionNotOnOrAfter($sessionEndTime->getTimestamp());
         $confirmation = $this->assertion->getSubjectConfirmation()[0];
-        $confirmation->SubjectConfirmationData->NotOnOrAfter = $sessionEndTime->getTimestamp();
+        $confirmation->getSubjectConfirmationData()->setNotOnOrAfter($sessionEndTime->getTimestamp());
         $this->assertion->setSubjectConfirmation([$confirmation]);
 
         return $this;
@@ -138,7 +137,7 @@ class AssertionBuilder
     {
         $confirmation = $this->assertion->getSubjectConfirmation()[0];
         /** @var \SAML2\XML\saml\SubjectConfirmation $confirmation */
-        $confirmation->SubjectConfirmationData->InResponseTo = $inResponseTo;
+        $confirmation->getSubjectConfirmationData()->setInResponseTo($inResponseTo);
 
         return $this;
     }
@@ -151,7 +150,7 @@ class AssertionBuilder
     {
         $confirmation = $this->assertion->getSubjectConfirmation()[0];
         /** @var \SAML2\XML\saml\SubjectConfirmation $confirmation */
-        $confirmation->Method = $method;
+        $confirmation->setMethod($method);
 
         return $this;
     }
@@ -164,7 +163,7 @@ class AssertionBuilder
     {
         $confirmation = $this->assertion->getSubjectConfirmation()[0];
         /** @var \SAML2\XML\saml\SubjectConfirmation $confirmation */
-        $confirmation->SubjectConfirmationData->Recipient = $recipient;
+        $confirmation->getSubjectConfirmationData()->setRecipient($recipient);
 
         return $this;
     }
@@ -208,20 +207,15 @@ class AssertionBuilder
     }
 
     /**
-     * @param string $value
-     * @param string $format
-     * @param null|string $nameQualifier
-     * @param null|string $spNameQualifier
      * @return $this
      */
-    public function setNameId($value, $format = null, $nameQualifier = null, $spNameQualifier = null)
+    public function setNameId(string $value, ?string $format = null, ?string $nameQualifier = null, ?\SAML2\XML\saml\Issuer $spNameQualifier = null)
     {
-        $nameId = [
-            'Value' => $value,
-            'Format' => $format,
-            'SPNameQualifier' => $spNameQualifier,
-            'NameQualifier' => $nameQualifier,
-        ];
+        $nameId = new \SAML2\XML\saml\NameID();
+        $nameId->setValue($value);
+        $nameId->setFormat($format);
+        $nameId->setNameQualifier($nameQualifier);
+        $nameId->setSPNameQualifier($spNameQualifier->getValue());
 
         $this->assertion->setNameId($nameId);
 
@@ -233,17 +227,17 @@ class AssertionBuilder
      */
     public function setSubjectConfirmation($method = \SAML2\Constants::CM_BEARER, $inResponseTo, \DateInterval $notOnOrAfter, $recipient) {
         $subjectConfirmationData = new \SAML2\XML\saml\SubjectConfirmationData();
-        $subjectConfirmationData->InResponseTo = $inResponseTo;
+        $subjectConfirmationData->setInResponseTo($inResponseTo);
 
         $endTime = clone $this->issueInstant;
         $endTime->add($notOnOrAfter);
-        $subjectConfirmationData->NotOnOrAfter = $endTime->getTimestamp();
+        $subjectConfirmationData->setNotOnOrAfter($endTime->getTimestamp());
 
-        $subjectConfirmationData->Recipient = $recipient;
+        $subjectConfirmationData->setRecipient($recipient);
 
         $subjectConformation = new \SAML2\XML\saml\SubjectConfirmation();
-        $subjectConformation->Method = $method;
-        $subjectConformation->SubjectConfirmationData = $subjectConfirmationData;
+        $subjectConformation->setMethod($method);
+        $subjectConformation->setSubjectConfirmationData($subjectConfirmationData);
         $this->assertion->setSubjectConfirmation([$subjectConformation]);
 
         return $this;
@@ -261,8 +255,11 @@ class AssertionBuilder
      * @param $issuer
      * @return $this
      */
-    public function setIssuer($issuer)
+    public function setIssuer($issuerValue)
     {
+        $issuer = new \SAML2\XML\saml\Issuer();
+        $issuer->setValue($issuerValue);
+
         $this->assertion->setIssuer($issuer);
 
         return $this;

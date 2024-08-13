@@ -316,6 +316,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
             $event = new ReceiveAuthnRequestEvent($authRequest, $this->identityProvider, $this->stateHandler);
             $this->eventDispatcher->dispatch(Saml2Events::SSO_AUTHN_RECEIVE_REQUEST, $event);
         } catch (\Throwable $e) {
+            dd($e);
             // handle error, apparently the request cannot be processed :(
             $msg = sprintf('Could not process Request, error: "%s"', $e->getMessage());
             $this->logger->critical($msg);
@@ -500,7 +501,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
         if ($logoutRequest !== null) {
             $logoutResponse = $this->buildLogoutResponse($logoutRequest);
 
-            $sp = $this->getServiceProvider($logoutRequest->getIssuer());
+            $sp = $this->getServiceProvider($logoutRequest->getIssuer()->getValue());
             $outBinding = $this->bindingContainer->get($sp->getSingleLogoutBinding());
 
             $this->logger->notice(sprintf('Logout: Respond to sp initiator %s',$sp->getEntityId()));
@@ -692,7 +693,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
      */
     protected function getServiceProvider($entityId)
     {
-        return $this->serviceProviderRepository->getServiceProvider($entityId);
+        return $this->serviceProviderRepository->getServiceProvider($entityId->getValue());
     }
 
     /**
@@ -725,8 +726,8 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
      */
     protected function validateMessage(\SAML2\Message $message)
     {
-        if (!$this->serviceProviderRepository->hasServiceProvider($message->getIssuer())) {
-            throw new UnknownServiceProviderException($message->getIssuer());
+        if (!$this->serviceProviderRepository->hasServiceProvider($message->getIssuer()->getValue())) {
+            throw new UnknownServiceProviderException($message->getIssuer()->getValue());
         }
 
         $serviceProvider = $this->getServiceProvider($message->getIssuer());

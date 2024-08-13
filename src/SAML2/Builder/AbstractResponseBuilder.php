@@ -84,7 +84,10 @@ abstract class AbstractResponseBuilder
      * @param $issuer
      * @return $this
      */
-    public function setIssuer($issuer){
+    public function setIssuer($issuerValue){
+        $issuer = new \SAML2\XML\saml\Issuer();
+        $issuer->setValue($issuerValue);
+
         $this->getResponse()->setIssuer($issuer);
 
         return $this;
