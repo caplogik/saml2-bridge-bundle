@@ -314,9 +314,8 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
             $this->validateMessage($authRequest);
 
             $event = new ReceiveAuthnRequestEvent($authRequest, $this->identityProvider, $this->stateHandler);
-            $this->eventDispatcher->dispatch(Saml2Events::SSO_AUTHN_RECEIVE_REQUEST, $event);
+            $this->eventDispatcher->dispatch($event, Saml2Events::SSO_AUTHN_RECEIVE_REQUEST);
         } catch (\Throwable $e) {
-            dd($e);
             // handle error, apparently the request cannot be processed :(
             $msg = sprintf('Could not process Request, error: "%s"', $e->getMessage());
             $this->logger->critical($msg);
@@ -381,7 +380,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
             $this->stateHandler->get()->addServiceProviderId($sp->getEntityId());
 
             $event = new AuthenticationSuccessEvent($sp, $this->identityProvider, $this->stateHandler);
-            $this->eventDispatcher->dispatch(Saml2Events::SSO_AUTHN_SUCCESS, $event);
+            $this->eventDispatcher->dispatch($event, Saml2Events::SSO_AUTHN_SUCCESS);
         }
 
         $this->stateHandler->apply(SamlStateHandler::TRANSITION_SSO_RESPOND);
@@ -626,7 +625,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
 
         $event = new GetAuthnResponseEvent($serviceProvider, $this->identityProvider, $this->stateHandler, $authnResponseBuilder);
 
-        $this->eventDispatcher->dispatch(Saml2Events::SSO_AUTHN_GET_RESPONSE, $event);
+        $this->eventDispatcher->dispatch($event, Saml2Events::SSO_AUTHN_GET_RESPONSE);
 
         return $event->getAuthnResponseBuilder()->getResponse();
     }

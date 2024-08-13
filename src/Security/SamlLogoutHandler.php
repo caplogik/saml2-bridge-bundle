@@ -62,6 +62,6 @@ class SamlLogoutHandler implements LogoutHandlerInterface
         }
 
         $event = new LogoutEvent($user, $response);
-        $this->dispatcher->dispatch(Saml2Events::SLO_LOGOUT_SUCCESS, $event);
+        $this->dispatcher->dispatch($event, Saml2Events::SLO_LOGOUT_SUCCESS);
     }
 }
