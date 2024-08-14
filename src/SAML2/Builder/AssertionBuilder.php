@@ -225,7 +225,7 @@ class AssertionBuilder
     /**
      * @return $this
      */
-    public function setSubjectConfirmation($method = \SAML2\Constants::CM_BEARER, $inResponseTo, \DateInterval $notOnOrAfter, $recipient) {
+    public function setSubjectConfirmation($inResponseTo, \DateInterval $notOnOrAfter, $recipient, $method = \SAML2\Constants::CM_BEARER) {
         $subjectConfirmationData = new \SAML2\XML\saml\SubjectConfirmationData();
         $subjectConfirmationData->setInResponseTo($inResponseTo);
 
@@ -242,6 +242,7 @@ class AssertionBuilder
 
         return $this;
     }
+
     /**
      * @return $this
      */
