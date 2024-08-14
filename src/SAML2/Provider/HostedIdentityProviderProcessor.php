@@ -426,7 +426,10 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
 
             $this->stateHandler->resume(true)->apply(SamlStateHandler::TRANSITION_SLS_START);
 
-            $this->stateHandler->get()->setRequest($logoutMessage);
+            // LogoutRequest is not serializable and cannot be stored in session anymore
+            // As a hacking fix we do not store the request and later not check its presence before transition
+            // $this->stateHandler->get()->setRequest($logoutMessage);
+            $this->stateHandler->get()->setRequest(null);
 
             $sp = $this->getServiceProvider($logoutMessage->getIssuer());
             $this->stateHandler->get()->removeServiceProviderId($sp->getEntityId());
@@ -460,7 +463,9 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
     public function continueSingleLogoutService()
     {
         $this->logger->notice('Continue SLS process');
-        if ($this->stateHandler->can(SamlStateHandler::TRANSITION_SLS_START_DISPATCH)) {
+
+        // Transition as been updated to not require a request because we cannot store it
+        if ($this->stateHandler->can(SamlStateHandler::TRANSITION_SLS_START_DISPATCH, false)) {
             $this->stateHandler->apply(SamlStateHandler::TRANSITION_SLS_START_DISPATCH);
 
             $this->logger->notice(
