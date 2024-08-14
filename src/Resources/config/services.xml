@@ -9,7 +9,7 @@
             <argument type="service" id="logger" />
         </service>
         <service id="adactive_sas_saml2_bridge.state.handler" class="AdactiveSas\Saml2BridgeBundle\SAML2\State\SamlStateHandler">
-            <argument type="service" id="session" />
+            <argument type="service" id="request_stack" />
             <argument type="service" id="security.token_storage" />
             <argument type="service" id="security.authorization_checker" />
             <tag name="kernel.event_subscriber" />

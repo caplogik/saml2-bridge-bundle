@@ -16,6 +16,7 @@ use Symfony\Component\Workflow\DefinitionBuilder;
 use Symfony\Component\Workflow\MarkingStore\MethodMarkingStore;
 use Symfony\Component\Workflow\Transition;
 use Symfony\Component\Workflow\Workflow;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class SamlStateHandler implements EventSubscriberInterface
 {
@@ -38,9 +39,9 @@ class SamlStateHandler implements EventSubscriberInterface
     const TRANSITION_SLS_RESUME = "sls_resume";
 
     /**
-     * @var Session
+     * @var RequestStack
      */
-    protected $session;
+    protected $requestStack;
 
     /**
      * @var Workflow
@@ -99,7 +100,7 @@ class SamlStateHandler implements EventSubscriberInterface
     public function onKernelRequest(RequestEvent $event)
     {
         // Reload from session
-        $state = $this->session->get(self::SESSION_NAME_ATTRIBUTE);
+        $state = $this->requestStack->getSession()->get(self::SESSION_NAME_ATTRIBUTE);
 
         $this->state = $state ? $state : new SamlState();
     }
@@ -109,18 +110,18 @@ class SamlStateHandler implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event){
         // Save into session
-        $this->session->set(self::SESSION_NAME_ATTRIBUTE, $this->state);
+        $this->requestStack->getSession()->set(self::SESSION_NAME_ATTRIBUTE, $this->state);
     }
 
     /**
      * SamlStateHandler constructor.
-     * @param Session $session
+     * @param RequestStack $requestStack
      * @param TokenStorageInterface $tokenStorage
      * @param AuthorizationChecker $authorizationChecker
      */
-    public function __construct(Session $session, TokenStorageInterface $tokenStorage, AuthorizationChecker $authorizationChecker)
+    public function __construct(RequestStack $requestStack, TokenStorageInterface $tokenStorage, AuthorizationChecker $authorizationChecker)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->tokenStorage = $tokenStorage;
         $this->authorizationChecker = $authorizationChecker;
 

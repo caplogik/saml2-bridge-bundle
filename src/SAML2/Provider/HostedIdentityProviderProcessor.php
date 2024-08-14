@@ -49,9 +49,8 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Security\Core\Authentication\Token\AnonymousToken;
-use Symfony\Component\Security\Core\AuthenticationEvents;
-use Symfony\Component\Security\Core\Event\AuthenticationEvent as CoreAuthenticationEvent;
-use Symfony\Component\Security\Core\Event\AuthenticationFailureEvent as CoreAuthenticationFailureEvent;
+use Symfony\Component\Security\Core\Event\AuthenticationSuccessEvent as CoreAuthenticationSuccessEvent;
+use Symfony\Component\Security\Http\Event\LoginFailureEvent as CoreLoginFailureEvent;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class HostedIdentityProviderProcessor implements EventSubscriberInterface
@@ -166,8 +165,8 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
     {
         return [
             KernelEvents::RESPONSE => 'onKernelResponse',
-            AuthenticationEvents::AUTHENTICATION_SUCCESS => "onAuthenticationSuccess",
-            AuthenticationEvents::AUTHENTICATION_FAILURE => "onAuthenticationFailure",
+            CoreAuthenticationSuccessEvent::class => "onAuthenticationSuccess",
+            CoreLoginFailureEvent::class => "onAuthenticationFailure",
             Saml2Events::SLO_LOGOUT_SUCCESS => 'onLogoutSuccess',
         ];
     }
@@ -177,7 +176,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
      */
     public function onKernelResponse(ResponseEvent $event)
     {
-        if (!$event->isMasterRequest()) {
+        if (!$event->isMainRequest()) {
             return;
         }
 
@@ -203,11 +202,11 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param CoreAuthenticationEvent $event
+     * @param CoreAuthenticationSuccessEvent $event
      */
-    public function onAuthenticationSuccess(CoreAuthenticationEvent $event)
+    public function onAuthenticationSuccess(CoreAuthenticationSuccessEvent $event)
     {
-        if ($event->getAuthenticationToken() instanceof AnonymousToken) {
+        if ($event->getAuthenticationToken() === null) {
             $this->logger->info("Anonymous user, wait for authentication");
             return;
         }
@@ -219,7 +218,7 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
         $user = $event->getAuthenticationToken()->getUser();
         if ($this->stateHandler->has()
             && $user instanceof UserInterface && $this->stateHandler->has()) {
-            $this->stateHandler->get()->setUserName($user->getUsername());
+            $this->stateHandler->get()->setUserName($user->getUserIdentifier());
         }
 
         if (!$this->stateHandler->can(SamlStateHandler::TRANSITION_SSO_AUTHENTICATE_SUCCESS)) {
@@ -234,9 +233,9 @@ class HostedIdentityProviderProcessor implements EventSubscriberInterface
     }
 
     /**
-     * @param CoreAuthenticationFailureEvent $event
+     * @param CoreLoginFailureEvent $event
      */
-    public function onAuthenticationFailure(CoreAuthenticationFailureEvent $event)
+    public function onAuthenticationFailure(CoreLoginFailureEvent $event)
     {
         if (!$this->stateHandler->can(SamlStateHandler::TRANSITION_SSO_AUTHENTICATE_FAIL)) {
             $this->logger->debug("Cannot perform authentication fail");
