@@ -58,7 +58,7 @@ class MetadataFactory
         $response = new Response();
 
         $response->setContent($this->twig->render(
-            "AdactiveSasSaml2BridgeBundle:Metadata:metadata.xml.twig",
+            "@AdactiveSasSaml2Bridge/Metadata/metadata.xml.twig",
             [
                 "metadata" => $this->buildMetadata()
             ]
