@@ -22,7 +22,7 @@ namespace AdactiveSas\Saml2BridgeBundle\SAML2\Metadata;
 
 
 use AdactiveSas\Saml2BridgeBundle\Entity\HostedEntities;
-use Symfony\Component\Routing\RouterInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
 class MetadataFactory
